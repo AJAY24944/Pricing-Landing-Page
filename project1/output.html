@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+        
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        nav li {
+            margin-right: 20px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .pricing {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pricing-plans {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .plan {
+            width: 30%;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plan h2 {
+            margin-top: 0;
+        }
+        
+        .plan ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .plan li {
+            margin-bottom: 10px;
+        }
+        
+        .plan button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .plan button:hover {
+            background-color: #3e8e41;
+        }
+        
+        .currency-selector {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .currency-selector label {
+            margin-right: 10px;
+        }
+        
+        .currency-selector select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .pricing-plans {
+                flex-direction: column;
+            }
+            .plan {
+                width: 100%;
+                margin: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="pricing">
+            <h1>Pricing Plans</h1>
+            <div class="pricing-plans">
+                <div class="plan">
+                    <h2>Basic</h2>
+                    <p>$9.99/month</p>
+                    <ul>
+                        <li>1 User</li>
+                        <li>10GB Storage</li>
+                        <li>Basic Support</li>
+                    </ul>
+                    <button class="toggle-button">Select Plan</button>
+                </div>
+                <div class="plan">
+                    <h2>Premium</h2>
+                    <p>$19.99/month</p>
+                    <ul>
+                        <li>5 Users</li>
+                        <li>50GB Storage</li>
+                        <li>Premium Support</li>
+                    </ul>
+                    <button class="toggle-button">Select Plan</button>
+                </div>
+                <div class="plan">
+                    <h2>Enterprise</h2>
+                    <p>Custom Pricing</p>
+                    <ul>
+                        <li>Unlimited Users</li>
+                        <li>Unlimited Storage</li>
+                        <li>Dedicated Support</li>
+                    </ul>
+                    <button class="toggle-button">Contact Us</button>
+                </div>
+            </div>
+            <div class="currency-selector">
+                <label for="currency">Currency:</label>
+                <select id="currency" onchange="changeCurrency(this)">
+                    <option value="usd">IND (₹)</option>
+                    <option value="usd">USD ($)</option>
+                    <option value="eur">EUR (€)</option>
+                    <option value="gbp">GBP (£)</option>
+                </select>
+            </div>
+        </section>
+    </main>
+    <script>
+        function changeCurrency(select) {
+            var plans = document.querySelectorAll('.plan');
+            var currency = select.value;
+            
+            plans.forEach(function(plan) {
+                var priceElement = plan.querySelector('p');
+                var currentPrice = priceElement.textContent;
+                
+                switch(currency) {
+                    case 'IND':
+                        if (currentPrice.includes('₹')) {
+                            priceElement.textContent = currentPrice.replace('₹', '£');
+                        } else if (currentPrice.includes('€')) {
+                            priceElement.textContent = currentPrice.replace('€', '£');
+                        }
+                        break;
+                    case 'USD':
+                        if (currentPrice.includes('€')) {
+                            priceElement.textContent = currentPrice.replace('€', '$');
+                        } else if (currentPrice.includes('£')) {
+                            priceElement.textContent = currentPrice.replace('£', '$');
+                        }
+                        break;
+                    case 'EUR':
+                        if (currentPrice.includes('$')) {
+                            priceElement.textContent = currentPrice.replace('$', '€');
+                        } else if (currentPrice.includes('£')) {
+                            priceElement.textContent = currentPrice.replace('£', '€');
+                        }
+                        break;
+                    case 'GBP':
+                        if (currentPrice.includes('$')) {
+                            priceElement.textContent = currentPrice.replace('$', '£');
+                        } else if (currentPrice.includes('€')) {
+                            priceElement.textContent = currentPrice.replace('€', '£');
+                        }
+                        break;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
